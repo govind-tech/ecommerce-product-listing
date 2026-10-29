@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My E-Commerce Store</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>My E-Commerce Store</h1>
+        <p>Find your favourite products at the best prices!</p>
+    </header>
+
+    <main>
+        <h2>Our Products</h2>
+
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search products...">
+
+                <select id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="Electronics">Electronics</option>
+                    <option value="Accessories">Accessories</option>
+                </select>
+            </div>
+
+        <p id="message" role="status">Loading products...</p>
+
+        <div id="productList" class="product-grid"></div>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

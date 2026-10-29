@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Product Details | My E-Commerce Store</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+        .details-container {
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 25px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .details-image {
+            display: block;
+            width: 100%;
+            max-width: 400px;
+            height: 300px;
+            object-fit: contain;
+            margin: 0 auto 25px;
+        }
+
+        .details-container h2 {
+            color: #1e293b;
+        }
+
+        .details-container p {
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .details-price {
+            font-size: 22px !important;
+            font-weight: bold;
+            color: #15803d;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>Product Details</h1>
+        <p>Explore our product information</p>
+    </header>
+
+    <main>
+        <a href="/" class="back-link">← Back to Products</a>
+
+        <section id="productDetails" class="details-container">
+            Loading product details...
+        </section>
+    </main>
+
+    <script>
+        const productId = {{ product_id }};
+        const details = document.getElementById("productDetails");
+
+        async function loadProductDetails() {
+            try {
+                const response = await fetch(`/api/products/${productId}`);
+
+                if (!response.ok) {
+                    throw new Error("Product not found");
+                }
+
+                const product = await response.json();
+
+                details.replaceChildren();
+
+                // Product image
+                const image = document.createElement("img");
+                image.src = `/static/${product.image.replace(".jpg",".png")}`;
+                image.alt = product.name;
+                image.className = "details-image";
+
+                image.onerror = function () {
+                    this.style.display = "none";
+                };
+
+                // Product name
+                const name = document.createElement("h2");
+                name.textContent = product.name;
+
+                // Product description
+                const description = document.createElement("p");
+                description.textContent = product.description;
+
+                // Product price
+                const price = document.createElement("p");
+                price.className = "details-price";
+                price.textContent =
+                    `Price: ₹${Number(product.price).toFixed(2)}`;
+
+                // Product category
+                const category = document.createElement("p");
+                category.textContent =
+                    `Category:
