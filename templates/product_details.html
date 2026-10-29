@@ -88,7 +88,7 @@
 
                 // Product image
                 const image = document.createElement("img");
-                image.src = `/static/${product.image.replace(".jpg",".png")}`;
+                image.src = `/static/${product.image.replace(".jpg", ".png")}`;
                 image.alt = product.name;
                 image.className = "details-image";
 
@@ -107,10 +107,23 @@
                 // Product price
                 const price = document.createElement("p");
                 price.className = "details-price";
-                price.textContent =
-                    `Price: ₹${Number(product.price).toFixed(2)}`;
+                price.textContent = `Price: ₹${Number(product.price).toFixed(2)}`;
 
                 // Product category
                 const category = document.createElement("p");
-                category.textContent =
-                    `Category:
+                category.textContent = `Category: ${product.category || "Other"}`;
+
+                // Display all product details
+                details.append(image, name, description, price, category);
+
+            } catch (error) {
+                details.textContent = "Unable to load product details. Please try again.";
+                console.error("Product details error:", error);
+            }
+        }
+
+        loadProductDetails();
+    </script>
+
+</body>
+</html>
